@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ski Finder</title>
+    <style>
+        img{
+            max-width: 500px;
+            max-height: auto;
+            
+        }
+        #product-card {
+            margin-left: 35%;
+        }
+        h1 {
+            text-align: center;
+        }
+        #main-content {
+            margin-top: 20pt;
+            padding: 10pt;
+            background-color: darkgray;
+            width: 100%;
+        }
+        #red{
+            color: red;
+        }
+        
+    </style>
+</head>
+<body>
+    
+
+    <h1>Test</h1>
+    <div id="main-content">
+    {% for item in skis%}
+    <div id="product-card"><h2>{{item[0]}}  {{item[1]}}</h2><img id="product-img" src={{item[2]}} alt="">
+    <div id="price">
+        <span>Price: <span id="red">{{item[3]}}</span> Was: {{item[4]}} -- <span><a href={{item[-1]}}>See More</a></span></span>
+    </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    
+</body>
+</html>
