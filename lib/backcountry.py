@@ -2,7 +2,7 @@ import requests as req;
 from bs4 import BeautifulSoup;
 URL = "https://www.backcountry.com/alpine-skiing?p=group_id%3Abc-alpine-skis&sort=-discountpercent"
 def scrape_backcountry():
-    skis_from_bc = [] #Brand,Title,img_src,price,compare_at,percent_off,link
+    skis_from_bc = [] #Brand,Title,img_src,price,compare_at,link
     entire_page = req.get(URL)
     soup = BeautifulSoup(entire_page.content,"html.parser")
     all_skis = soup.find_all("div",{"data-id":"productListingItems"})
