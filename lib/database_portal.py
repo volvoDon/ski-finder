@@ -2,9 +2,9 @@ import mysql.connector
 TESTARRAY = [1,2,3,4,5,6,7]
 TESTARRAY_SHORT = [1,2,3,4,5,6]
 mydb = mysql.connector.connect(
-  host="localhost",
+  host='localhost',
   user="root",
-  database="portal"
+  database="portal",
 )
 
 mycursor = mydb.cursor()
@@ -32,4 +32,5 @@ def get_all():
     for item in results:
       final.append(list(item))
     return final
+
 
