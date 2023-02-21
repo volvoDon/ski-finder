@@ -1,47 +1,32 @@
-import database
+from . import database
 import os
 from sqlalchemy import text
 
-def getconn():
-    with Connector() as connector:
-        conn = connector.connect(
-            "skifinder:us-central1:ski-finder-data", # Cloud SQL Instance Connection Name
-            "mysql",
-            user="root",
-            password=os.getenv("PASSWORD"),
-            db="portal",
-        )
-    return conn
 
-pool = sqlalchemy.create_engine(
-    "mysql+pymysql://",
-    creator=getconn,
-)
-
+pool = database.connect_unix_socket()
 
 def clear_db ():
-    stmt = sqlalchemy.text("DELETE FROM product")
-    with pool.connect() as db_con:
-      db_con.execute(stmt)
+    stmt = text("DELETE FROM test_product")
+    pool.execute(stmt)
 
 def add_row (row):
     if len(row) == 7:
-      sql = "INSERT INTO product VALUES (%s, %s, %s, %s, %s, %s, %s)"
-      
+      sql = "INSERT INTO test_product VALUES (%s, %s, %s, %s, %s, %s, %s)"
+      stmt = text(sql)
     else:
-      sql = "INSERT INTO product(brand,title,img_url,price,compare,link_pure) VALUES (%s, %s, %s, %s, %s, %s)"
-    
+      sql = "INSERT INTO test_product(brand,title,img_url,price,compare,link_pure) VALUES (%s, %s, %s, %s, %s, %s)"
+      stmt = text(sql)
     val = tuple(row)  
      
-    with pool.connect() as db_con:
-      db_con.execute(sql,val)
+    
+    pool.execute(sql,val)
 
 def get_all():
     final = []
-    with pool.connect() as db_con:
-      results = db_con.execute("SELECT * FROM product").fetchall()
-      for item in results:
-        final.append(list(item))
+    sql = text("SELECT * FROM test_product")
+    results = pool.execute(sql).fetchall()
+    for item in results:
+      final.append(list(item))
     return final
 
 print(get_all())
